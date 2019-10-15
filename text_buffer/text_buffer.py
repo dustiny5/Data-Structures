@@ -34,9 +34,12 @@ class TextBuffer:
             self.storage.remove_from_tail()
 
     def join(self, other_buffer):
+        # Pointing
         self.storage.tail.next = other_buffer.storage.head
         other_buffer.storage.head.prev = self.storage.tail
+        print(other_buffer.storage.head.value)
         other_buffer.storage.head = self.storage.head
+        print(other_buffer.storage.head.value)
         self.storage.tail = other_buffer.storage.tail
 
     def split(self, split_location):
@@ -47,6 +50,7 @@ class TextBuffer:
         # Add n chars to string
         # Put string into a new buffer (init)
         # Return new buffer
+        pass
 
     def join_string(self, string_to_join):
         # new_buffer = TextBuffer(string_to_join)
