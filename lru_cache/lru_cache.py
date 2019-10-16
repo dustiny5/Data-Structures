@@ -13,6 +13,7 @@ class LRUCache:
     def __init__(self, limit=10):
         self.storage = DoublyLinkedList()
         self.limit = limit
+        self.size = 0
         self.cache = {}
 
     """
@@ -27,7 +28,6 @@ class LRUCache:
             self.storage.move_to_end(self.cache[k])
             return self.cache[k].value
         return None
-        print(self.limit)
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -40,22 +40,23 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, k, v):
-        # Check if limit is 10 and remove the least recent unit
-        if self.limit == 10:
-            cache_value = self.storage.remove_from_head()
-
-            # Delete from cache when limit = 10
-            for x,y in self.cache.items():
-                if y == cache_value:
-                    del self.cache[x]
-        
         # Update cache dict and move it to the tail
         if k in self.cache:
             self.cache[k].value = v
-            self.storage.move_to_end(self.cache[k])
+            #self.storage.move_to_end(self.cache[k])
         # Add to cache dict and add to tail
         else:
             self.storage.add_to_tail(v)
             self.cache[k] = self.storage.tail
-            self.limit += 1
-        print(self.limit)
+            self.size += 1
+            
+        # Check size
+        if self.size > self.limit:
+            self.size -= 1
+            cache_value = self.storage.remove_from_head()
+
+            # Delete from cache when limit = 10
+            for x,y in self.cache.items():
+                if y.value == cache_value:
+                    key_x = x
+            del self.cache[key_x]
