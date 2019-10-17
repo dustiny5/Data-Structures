@@ -42,7 +42,7 @@ class BinarySearchTree:
                 if not self.left:
                     return False
                 return self.left.contains(target)
-            elif target > self.value:
+            else:
                 if not self.right:
                     return False
                 return self.right.contains(target)
